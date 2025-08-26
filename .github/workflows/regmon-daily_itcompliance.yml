@@ -1,0 +1,65 @@
+name: RegMon Daily IT Compliance News Monitor
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '12 7,13 * * *'
+
+concurrency:
+  group: 'repo-update'
+  cancel-in-progress: false  
+
+jobs:
+  run-regmon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20  # Gesamt-Timeout
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Setup R
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: 'release'
+        use-public-rspm: true
+        
+    - name: Install system dependencies
+      timeout-minutes: 3
+      run: |
+        sudo apt-get update -qq
+        sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+        
+    - name: Install R dependencies (optimiert)
+      timeout-minutes: 8
+      run: |
+        options(repos = c(RSPM = "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"))
+        install.packages(c("httr", "dplyr", "lubridate", "jsonlite", "stringr", "readr"))
+        install.packages("tidyRSS")
+        install.packages("blastula")
+      shell: Rscript {0}
+        
+    - name: RegMon Summary
+      if: always()
+      run: |
+        echo "=== REGMON GITHUB ACTIONS SUMMARY ==="
+        echo "Date: $(date)"
+        echo "CSV file exists: $(test -f regulatory_news_history_itcompliance.csv && echo 'YES' || echo 'NO')"
+        echo "RegMon completed successfully!"
+        
+    - name: Run R script and handle Git operations
+      timeout-minutes: 8
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+        BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+        EMAIL_RECIPIENTS_IT: ${{ secrets.EMAIL_RECIPIENTS_IT }}
+      run: |
+        git config user.name "FranzKafka537"  
+        git config user.email "franz.kafka789@gmail.com"
+        git pull --rebase origin main
+        Rscript IT-Compliance/202507_RegMon_LLM_itcompliance.R
+        git add regulatory_news_history_itcompliance.csv
+        git diff --staged --quiet || git commit -m "Auto-update: RegMon history itcompliance $(date '+%Y-%m-%d %H:%M:%S')"
+        git push
