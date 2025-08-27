@@ -1,16 +1,16 @@
-# RegMon - Regulatorischer KI-Monitor
+# RegMon - Regulatory Monitor utilizing AI
 
-RegMon automatisiert und potimiert die Überwachung neuer Regulatorik und Compliance-News mithilfe von LLM-Technologien. Es wurde entwickelt, um Fachexperten und Entscheidungsträger in der Finanzdienstleistungsbranche (z.B. im Risikomanagement und in der Compliance) zeitnah mit kuratierten und relevanten Informationen zu versorgen. Dies ermöglicht ein proaktives Handeln und die frühzeitige Anpassung an neue aufsichtsrechtliche Anforderungen (z.B. IT-Compliance, ESG-Compliance, etc.).
+RegMon automates and optimizes the monitoring of new regulatory and compliance news using LLM technologies. It was developed to provide experts and decision-makers in the financial services industry (e.g., in risk management and compliance) with timely, curated, and relevant information. This enables proactive management and the early adaptation to new supervisory requirements (e.g., IT compliance, ESG compliance, etc.).
 
-**Kernfunktionen:**
-* **Erkennung:** Scannt neue regulatorische Nachrichten via RSS-Feeds nach relevanten Beiträgen.
-* **Klassifizierung:** Dichotome Einordnung in relevant bzw. unrelevant.
-* **Begründung:** Stellt eine prägnante Herleitung der Klassifizierungseinordnung zur Verfügung.
-* **Verteilung:** Bereitet relevante News auf und versendet diese täglich, anlassbezogen an eine definierte Empfängergruppe per E-Mail.
-* **Flexiblität:** Die thematischen (Neu-)Ausrichtung des Tools kann über eine Schwerpunktbeschreibung per Promt zügig neu definiert werden.
+**Core Features:**
+* **Detection:** Scans new regulatory news from RSS feeds for relevant articles.
+* **Classification:** Produces a dichotomous classification of news as either relevant or irrelevant.
+* **Justification:** Provides a concise derivation for the classification.
+* **Distribution:** Prepares and sends daily, event-based updates of relevant news to a defined recipient group via email.
+* **Flexibility:** The tool's thematic focus can be quickly redefined via a prompt-based description.
 
-**Verwendete Technologien:**
-* **R:** Für die gesamte Verarbeitung.
-* **OpenRouter.ai:** Für die LLM-Anbindung via API.
-* **Mistral Small 3.2 24B:** Als zugrundeliegendes LLM-Modell.
-* **Brevo:** Für den stabilen E-Mail-Versandt via API.
+**Technologies Used:**
+* **R:** For the entire processing workflow.
+* **OpenRouter.ai:** For the LLM API connection.
+* **Mistral Small 3.2 24B:** As the underlying LLM model.
+* **Brevo:** For reliable email delivery via API.
