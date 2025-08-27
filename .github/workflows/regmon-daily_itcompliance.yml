@@ -2,8 +2,6 @@ name: RegMon Daily IT Compliance News Monitor
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '12 7,13 * * *'
 
 concurrency:
   group: 'repo-update'
