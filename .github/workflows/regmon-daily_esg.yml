@@ -2,9 +2,7 @@ name: RegMon Daily ESG News Monitor
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '14 7,13 * * *'
-
+  
 concurrency:
   group: 'repo-update'
   cancel-in-progress: false
